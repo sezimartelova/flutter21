@@ -16,7 +16,7 @@ class MyHomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Questions(
-            text: quizeList[2].question,
+            text: quizeList[0].question,
           ),
           const SizedBox(
             height: 153,
@@ -34,6 +34,7 @@ class MyHomePage extends StatelessWidget {
       )),
     );
   }
+
 
   AppBar myAppBar() {
     return AppBar(
