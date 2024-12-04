@@ -7,11 +7,15 @@ class WeightAgeContainer extends StatelessWidget {
     required this.san,
     required this.iconAdd,
     required this.iconRemove,
+    this.onPressedRemoveIcon,
+    this.onPressedAddIcon,
   });
   final String text;
   final int san;
   final IconData iconAdd;
   final IconData iconRemove;
+  final void Function()? onPressedRemoveIcon;
+  final void Function()? onPressedAddIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +55,7 @@ class WeightAgeContainer extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: onPressedRemoveIcon,
                 ),
                 IconButton(
                   color: Colors.red,
@@ -62,7 +66,7 @@ class WeightAgeContainer extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: onPressedAddIcon,
                 ),
               ],
             )

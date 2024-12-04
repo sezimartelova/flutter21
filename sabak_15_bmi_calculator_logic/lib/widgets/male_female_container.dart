@@ -1,4 +1,3 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 
 class MaleFemaleContainer extends StatelessWidget {
@@ -9,14 +8,15 @@ class MaleFemaleContainer extends StatelessWidget {
     required this.iconColor,
     this.onTap,
     required this.iconSize,
-    required this.stopPauseOnTap,
+    required this.textColor,
   });
+
   final IconData icon;
   final String text;
   final Color iconColor;
+  final Color textColor;
   final void Function()? onTap;
   final double iconSize;
-  final bool stopPauseOnTap;
 
   @override
   Widget build(BuildContext context) {
@@ -38,21 +38,13 @@ class MaleFemaleContainer extends StatelessWidget {
                 color: iconColor,
                 size: iconSize,
               ),
-              AnimatedTextKit(
-                animatedTexts: [
-                  ScaleAnimatedText(
-                    text.toUpperCase(), // тексттерди чон тамга кылып берет
-                    textStyle: const TextStyle(
-                      color: Color(0xffceccd2),
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )
-                ],
-                totalRepeatCount: 1000,
-                pause: const Duration(milliseconds: 1000),
-                displayFullTextOnTap: true,
-                stopPauseOnTap: stopPauseOnTap,
+              Text(
+                text,
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ],
           ),
@@ -61,3 +53,22 @@ class MaleFemaleContainer extends StatelessWidget {
     );
   }
 }
+
+
+
+// AnimatedTextKit(
+ //              animatedTexts: [
+   //               RotateAnimatedText(
+     //               text.toUpperCase(), // тексттерди чон тамга кылып берет
+       //             textStyle: const TextStyle(
+          //            color: Color(0xffceccd2),
+            //          fontSize: 18,
+              //        fontWeight: FontWeight.w500,
+                //    ),
+                  //),
+                
+                //totalRepeatCount: 3,
+ //               pause: const Duration(milliseconds: 10000),
+   //             displayFullTextOnTap: true,
+     //           stopPauseOnTap: stopPauseOnTap,
+       //       );

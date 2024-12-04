@@ -4,10 +4,14 @@ class HeightContainer extends StatelessWidget {
   const HeightContainer({
     super.key,
     required this.text,
-    required this.textSm,
+    required this.san,
+    required this.sm,
+    required this.widget,
   });
   final String text;
-  final String textSm;
+  final int san;
+  final String sm;
+  final Widget widget;
 
   @override
   Widget build(BuildContext context) {
@@ -25,25 +29,33 @@ class HeightContainer extends StatelessWidget {
               Text(
                 text.toUpperCase(),
                 style: const TextStyle(
-                    color: Colors.white,
+                    color: Color(0xffceccd2),
                     fontSize: 20,
                     fontWeight: FontWeight.w500),
               ),
-              Text(
-                textSm,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 48,
-                    fontWeight: FontWeight.w800),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                textBaseline: TextBaseline.alphabetic,
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                children: [
+                  Text(
+                    san.toString(),
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 40,
+                        fontWeight: FontWeight.w800),
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    sm,
+                    style: const TextStyle(
+                        color: Color(0xffceccd2),
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800),
+                  ),
+                ],
               ),
-              Slider.adaptive(
-                thumbColor: const Color(0xffff0f65),
-                activeColor: Colors.white,
-                inactiveColor: Colors.grey,
-                max: 230,
-                value: 180,
-                onChanged: (v) {},
-              )
+              widget,
             ],
           ),
         ));
