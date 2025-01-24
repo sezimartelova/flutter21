@@ -29,7 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void weatherFun() async {
     final url = Uri.parse(
         //функция,ичнде https деген пакет колдондук
-        'https://api.openweathermap.org/data/2.5/weather?q=hamburg,&appid=41aa18abb8974c0ea27098038f6feb1b');
+        'https://api.openweathermap.org/data/2.5/weather?q=bishkek,&appid=41aa18abb8974c0ea27098038f6feb1b');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       //серверден бут маалымат келди дегенди билдирет
@@ -44,6 +44,8 @@ class _MyHomePageState extends State<MyHomePage> {
       final wind = (data['wind']['speed'] ?? 0.0).toDouble();
 
       final withKelvin = temp - 273.15;
+
+      //[]
 
       setState(() {
         weatherInfo = withKelvin.toStringAsFixed(0);
@@ -105,8 +107,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         Image.network(
                           weatherIcon.isEmpty
                               ? 'https://openweathermap.org/img/wn/$weatherIcon@2x.png'
-                              : 'assets/images/cludy.png',
-                          //   //"assets/images/cludy _1x.png",
+                              : //'assets/images/cludy.png',
+                              'assets/images/cludy _1x.png',
                           width: 250.16,
                           height: 250.98,
                           fit: BoxFit.fill,

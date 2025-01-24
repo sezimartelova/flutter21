@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sabak_17_news_app_ui/constants/app_colors/app_bar_bgc.dart';
-import 'package:sabak_17_news_app_ui/constants/app_colors/icons_color.dart';
-import 'package:sabak_17_news_app_ui/constants/text_styles/text_styles.dart';
-import 'package:sabak_17_news_app_ui/features/data/oop.dart';
+import 'package:sabak_17_news_app_ui/features/data/service.dart';
+import 'package:sabak_17_news_app_ui/features/model/news_model.dart';
+import 'package:sabak_17_news_app_ui/methods/my_app_bar.dart';
 import 'package:sabak_17_news_app_ui/widgets/news_card.dart';
+import 'package:sabak_17_news_app_ui/widgets/search_widget.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -14,62 +15,48 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
+  void initState() {
+    super.initState();
+    NewsService().fetchData();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
       backgroundColor: scaffoldColor,
       appBar: myAppBar(),
-      body: ListView.builder(
-          itemCount: newsList.length,
-          itemBuilder: (context, index) {
-            return NewsCard(
-              index: index,
-              newsList: newsList,
-            ); //extrectWidget кылып чыгарып салдык
+      body: FutureBuilder<NewsModel?>(
+          future: NewsService().fetchData(),
+          builder: (BuildContext context, AsyncSnapshot<NewsModel?> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator.adaptive());
+            } else if (snapshot.connectionState == ConnectionState.none) {
+              return const Center(
+                child: Text('Сервер не работает'),
+              );
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              return RefreshIndicator(
+                onRefresh: () async {
+                  NewsModel();
+                },
+                child: ListView.builder(
+                    itemCount: snapshot.data?.articles?.length,
+                    itemBuilder: (context, index) {
+                      final data = snapshot.data!.articles;
+                      return NewsCard(
+                          index: index,
+                          data: data); //extrectWidget кылып чыгарып салдык
+                    }),
+              );
+            }
+            return const Center(
+              child: Text('Белгисиз абал'),
+            );
           }),
+
       floatingActionButton:
           const SearchWidget(), //CircleAvatar ды экстрактвиджет кылып чыгардык
     ));
-  }
-
-  AppBar myAppBar() {
-    return AppBar(
-      backgroundColor: orangeColor,
-      //^app_bar_bgc файлга класс тузуп,эпбардын колорун бердик кыскартып
-      title: const Text(
-        'News Agregator',
-        style: titleStyle,
-      ),
-      actions: const [
-        Icon(
-          Icons.more_vert, //иконканын названиеси(вертикально 3 точка,c права)
-          color: menuColor,
-        ),
-      ],
-    );
-  }
-}
-
-//search деген знактын коду,экстр.виджет болуп чыгарылды
-class SearchWidget extends StatelessWidget {
-  const SearchWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return CircleAvatar(
-      radius: 40,
-      backgroundColor: orangeColor,
-      child: IconButton(
-        onPressed: () {},
-        icon: const Icon(
-          Icons.search,
-          color: searchColor,
-          size: 30,
-        ),
-        //ui ылдый,он жак бурчундагы "издоо" деген белги
-      ),
-    );
   }
 }
